@@ -8,6 +8,8 @@ class Store {
     this.state = {
       ...initState,
       cart: [],
+      cartSum: 0,
+      totalProduct: 0,
     };
     this.listeners = []; // Слушатели изменений состояния
   }
@@ -55,11 +57,15 @@ class Store {
       ],
     });
   }
+  countTotalPrice(items) {
+    return items.reduce((sum, item) => {
+      return item.price * item.count + sum;
+    }, 0);
+  }
   /**
    * Добавление в корзину
    */
   addItemToCart(item) {
-    debugger;
     const itemAdded = this.state.cart.find((elem) => item.code === elem.code);
     if (itemAdded) {
       this.setState({
@@ -84,15 +90,26 @@ class Store {
         cart: [...this.state.cart, newItem],
       });
     }
+    this.setState({
+      ...this.state,
+      totalProduct: this.state.cart.length,
+      cartSum: this.countTotalPrice(this.state.cart),
+    });
   }
+
   /**
-   * Удаление товара 
-   * 
+   * Удаление товара
+   *
    */
   deleteItemFromCart(item) {
     this.setState({
       ...this.state,
       cart: this.state.cart.filter((elem) => item.code !== elem.code),
+    });
+    this.setState({
+      ...this.state,
+      totalProduct: this.state.cart.length,
+      cartSum: this.countTotalPrice(this.state.cart),
     });
   }
 

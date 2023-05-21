@@ -2,12 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
 import "./style.css";
-import Head from "../head";
-import Controls from "../controls";
 import Item from "../item";
-import { countTotalPrice } from "../../utils";
+import Modal from "../modal";
 
-function Cart({ onClose, cart, onDeleteCartItem }) {
+function Cart({ onClose, cart, onDeleteCartItem, cartSum }) {
   const cn = bem("Cart");
   const callbacks = {
     onDeleteItem: (item) => {
@@ -15,34 +13,28 @@ function Cart({ onClose, cart, onDeleteCartItem }) {
     },
   };
   return (
-    <div className={cn()}>
-      <div className={cn("window")}>
-        <div className={cn("row")}>
-          <Head title="Корзина" />
-          <Controls actionFunc={onClose} title="Закрыть" />
-        </div>
-        {cart.length ? (
-          <div className={cn("body")}>
-            {cart.map((item) => (
-              <div key={item.code} className={cn("item")}>
-                <Item
-                  item={item}
-                  onClickButton={callbacks.onDeleteItem}
-                  textButton="Удалить"
-                />
-              </div>
-            ))}
-            <div className={cn("result")}>
-              {" "}
-              Итого: <p className={cn("sum")}>{countTotalPrice(cart)} ₽</p>
+    <Modal onClose={onClose} title="Корзина">
+      {cart.length ? (
+        <div className={cn()}>
+          <div className="empty"></div>
+          {cart.map((item) => (
+            <div key={item.code} className={cn("item")}>
+              <Item
+                item={item}
+                onClickButton={callbacks.onDeleteItem}
+                textButton="Удалить"
+              />
             </div>
+          ))}
+          <div className={cn("result")}>
+            <p>Итого:</p>
+            <p className={cn("sum")}>{cartSum.toLocaleString("ru-RU")} ₽</p>
           </div>
-        ) : (
-          <h3>Корзина пyста</h3>
-        )}
-      </div>
-      <div className="overlay"></div>
-    </div>
+        </div>
+      ) : (
+        <h3 className={cn("none")}>Корзина пyста</h3>
+      )}
+    </Modal>
   );
 }
 Cart.propTypes = {

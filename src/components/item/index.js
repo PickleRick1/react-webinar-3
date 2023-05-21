@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./style.css";
-import Controls from "../controls";
 import { cn as bem } from "@bem-react/classname";
 function Item({ onClickButton, item, textButton }) {
   const callbacks = {
     onAction: (item) => {
+      debugger;
       onClickButton(item);
     },
   };
@@ -15,17 +15,16 @@ function Item({ onClickButton, item, textButton }) {
       <div className={cn("code")}>{item.code}</div>
       <div className={cn("title")}>{item.title}</div>
       <div className={cn("price")}>
-        {item.price}&nbsp;<span>₽</span>
+        {item.price.toLocaleString("ru-RU")}&nbsp;<span>₽</span>
       </div>
       {item.count ? (
         <p className={cn("count")}>
           {item.count}&nbsp;<span>шт</span>
         </p>
       ) : null}
-      <Controls
-        actionFunc={() => callbacks.onAction(item)}
-        title={textButton}
-      ></Controls>
+      <button onClick={() => callbacks.onAction(item)} className={cn("button")}>
+        {textButton}
+      </button>
     </div>
   );
 }

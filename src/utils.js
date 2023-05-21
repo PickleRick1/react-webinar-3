@@ -15,11 +15,7 @@ export function plural(value, variants = {}, locale = "ru-RU") {
   // Возвращаем вариант по ключу, если он есть
   return variants[key] || "";
 }
-export const countTotalPrice = (items) => {
-  return items.reduce((sum, item) => {
-    return item.price * item.count + sum;
-  }, 0);
-};
+
 /**
  * Генератор чисел с шагом 1
  * Вариант с замыканием на начальное значение в самовызываемой функции.

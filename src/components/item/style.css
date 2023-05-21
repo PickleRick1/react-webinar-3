@@ -2,6 +2,7 @@
   display: flex;
   justify-content: flex-start;
   transition: background-color 1s;
+  align-items: center;
 }
 
 .Item_selected {
@@ -25,7 +26,7 @@
   color: #404040;
 }
 .Item-price + .Item-count {
-  margin: 0 33px;
+  margin: 0 13px 0 62px;
 }
 .Item-count {
   display: flex;
@@ -34,4 +35,7 @@
 .Item-actions {
   display: flex;
   justify-content: flex-end;
+}
+.Item-button {
+  margin: 20px;
 }

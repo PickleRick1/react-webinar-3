@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { plural } from "../../utils";
 import { cn as bem } from "@bem-react/classname";
 import "./style.css";
+import Controls from "../controls";
 
-function Label({ number, sum }) {
+function Label({ number, sum, onShow }) {
   const cn = bem("Label");
   return (
     <div className={cn()}>
@@ -20,10 +21,11 @@ function Label({ number, sum }) {
               few: "товара",
               many: "товаров",
             })}{" "}
-            / {sum} ₽
+            / {sum.toLocaleString("ru-RU")} ₽
           </span>
         )}{" "}
       </p>
+      <Controls actionFunc={onShow} title="Перейти" />
     </div>
   );
 }
